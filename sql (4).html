@@ -1,0 +1,229 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@1,200&display=swap" rel="stylesheet">
+
+
+    <style>
+        *{
+            font-family:Mangal;
+        }
+        #tbl {
+            margin-left: 10px;
+        }
+
+        .totalrow {
+            font-weight: bold
+        }
+        thead>tr{
+            background-color:lavender;
+        }
+        .totalrow {
+            background-color: lavender;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card ">
+        <div class="card-header text-center">
+            <h4>Monthly Fee Details</h4>
+        </div>
+        <div class="card-body">
+
+
+            <div id="tbl">
+
+            </div>
+
+        </div>
+
+    </div>
+    <script src="jquery-3.6.1.min.js"></script>
+
+    <script>
+        var tbl = '{"Table1":[{"VoucherNo":"Opening","Month":"","Date":"1900-01-01T00:00:00","GeneralLedgerCode":3,"BillAmount":0.00,"ReceiptAmount":0.00,"Discount":0.00,"Total":3.000000,"LedgerName":"Continuous Evaluation"},{"VoucherNo":"Opening","Month":"","Date":"1900-01-01T00:00:00","GeneralLedgerCode":2,"BillAmount":0.00,"ReceiptAmount":0.00,"Discount":0.00,"Total":4.000000,"LedgerName":"Co-Curriculum activities"},{"VoucherNo":"MB00001","Month":"July","Date":"2022-07-24T00:00:00","GeneralLedgerCode":2,"BillAmount":2800.00,"ReceiptAmount":0.00,"Discount":0.00,"Total":2800.000000,"LedgerName":"Co-Curriculum activities"},{"VoucherNo":"MB00001","Month":"July","Date":"2022-07-24T00:00:00","GeneralLedgerCode":3,"BillAmount":2950.00,"ReceiptAmount":0.00,"Discount":0.00,"Total":2950.000000,"LedgerName":"Continuous Evaluation"},{"VoucherNo":"MB00001","Month":"July","Date":"2022-07-24T00:00:00","GeneralLedgerCode":4,"BillAmount":2800.00,"ReceiptAmount":0.00,"Discount":0.00,"Total":2800.000000,"LedgerName":"Intellectual & Emotional Development"},{"VoucherNo":"MB00001","Month":"July","Date":"2022-07-24T00:00:00","GeneralLedgerCode":7,"BillAmount":4920.00,"ReceiptAmount":0.00,"Discount":0.00,"Total":4920.000000,"LedgerName":"Meal"},{"VoucherNo":"MB00001","Month":"July","Date":"2022-07-24T00:00:00","GeneralLedgerCode":6,"BillAmount":2400.00,"ReceiptAmount":0.00,"Discount":0.00,"Total":2400.000000,"LedgerName":"Transportation"},{"VoucherNo":"MB00001","Month":"July","Date":"2022-07-24T00:00:00","GeneralLedgerCode":1,"BillAmount":4350.00,"ReceiptAmount":0.00,"Discount":0.00,"Total":4350.000000,"LedgerName":"Tution Fee"},{"VoucherNo":"REC00001","Month":"September","Date":"2022-09-09T00:00:00","GeneralLedgerCode":1,"BillAmount":0.00,"ReceiptAmount":1000.00,"Discount":0.00,"Total":1000.000000,"LedgerName":"Tution Fee"},{"VoucherNo":"REC00004","Month":"January","Date":"2023-01-12T00:00:00","GeneralLedgerCode":1,"BillAmount":0.00,"ReceiptAmount":100.00,"Discount":0.00,"Total":100.000000,"LedgerName":"Tution Fee"},{"VoucherNo":"MB00029","Month": "January", "Date": "2023-01-25T00:00:00", "GeneralLedgerCode": 2, "BillAmount": 100.00, "ReceiptAmount": 0.00, "Discount": 0.00, "Total": 100.000000, "LedgerName": "Co-Curriculum activities"}, { "VoucherNo": "MB00029", "Month": "January", "Date": "2023-01-25T00:00:00", "GeneralLedgerCode": 3, "BillAmount": 200.00, "ReceiptAmount": 0.00, "Discount": 0.00, "Total": 200.000000, "LedgerName": "Continuous Evaluation" }, { "VoucherNo": "MB00029", "Month": "January", "Date": "2023-01-25T00:00:00", "GeneralLedgerCode": 4, "BillAmount": 300.00, "ReceiptAmount": 0.00, "Discount": 0.00, "Total": 300.000000, "LedgerName": "Intellectual & Emotional Development" }, { "VoucherNo": "MB00029", "Month": "January", "Date": "2023-01-25T00:00:00", "GeneralLedgerCode": 5, "BillAmount": 400.00, "ReceiptAmount": 0.00, "Discount": 0.00, "Total": 400.000000, "LedgerName": "Musical Instrument Class" }, { "VoucherNo": "MB00029", "Month": "January", "Date": "2023-01-25T00:00:00", "GeneralLedgerCode": 7, "BillAmount": 500.00, "ReceiptAmount": 0.00, "Discount": 0.00, "Total": 500.000000, "LedgerName": "Meal" }]}';
+        var jon = JSON.parse(tbl)
+        var t1 = jon["Table1"]
+
+        var voucherno = [];
+        var html = '<table class="table table-bordered   " id = "tbl1"><thead>';
+        html += '<tr ><th >VoucherNo</th><th >Month</th><th>Voucher Date</th><th >LedgerName</th><th>BillAmount</th><th>ReceiptAmount</th><th>Discount</th><th>Total</th><th>Balance</th></tr></thead>';
+
+        //console.log(voucherno);\
+        var sum = 0;
+        html += '<tbody>'
+        var  a = '';
+        var b = [];
+        var total = 0;
+        var balance = 0
+        var totalBill = 0;
+        var totalRe = 0;
+        var vsum = 0
+        var rsum = 0;
+        var opening = 0;
+
+        $.each(t1, function (ind, val) {
+
+            //.substring(0, val.DateAD.indexOf('T'));
+            if (val.BillAmount === 0) {
+                val.BillAmount = ''
+            }
+            if (val.ReceiptAmount === 0) {
+                val.ReceiptAmount = ''
+            }
+
+            if (val.Discount === 0) {
+                val.Discount = ''
+            }
+            var d = val.Date.substring(0, val.Date.indexOf('T'))
+            debugger
+            if (a != val.VoucherNo) {
+                //distinct vouchertype
+                if (a === '') {
+                    a = val.VoucherNo;
+
+                    total = total + val.Total
+
+                    balance = balance + val.Total;
+                    balance = balance - val.ReceiptAmount;
+                    if (val.VoucherNo == 'Opening') {
+                        vsum = vsum + val.Total
+                        opening = opening + val.Total
+                        html += '<tr><td>' + val.VoucherNo + '</td><td id="show' + val.VoucherNo + '"></td><td></td></tr>'
+                        
+                        
+
+                        html += '<tr><td>' + val.VoucherNo + '</td><td>' + val.Month + '</td><td>' + d + '</td><td>' + val.LedgerName + '</td><td>' + val.BillAmount + '</td><td>' + val.ReceiptAmount + '</td><td>' + val.Discount + '</td><td> ' + '</td > <td>' + val.Total + '</td>'; $('#' + val.VoucherNo).html(vsum);
+                    }
+                    else {
+                        html += '<tr><td>' + val.VoucherNo + '</td><td id="show' + a+ '">' + '</td></tr>'
+                       
+
+                        html += '<tr ><td id="' + val.VoucherNo + '"></td><td>' + val.VoucherNo + '</td><td>' + val.Month + '</td><td>' + d + '</td><td>' + val.LedgerName + '</td><td>' + val.BillAmount + '</td><td>' + val.ReceiptAmount + '</td><td>' + val.Discount + '</td><td> ' + val.Total + '</td > <td></td><td></td>';
+                        vsum = vsum + val.Total
+                    }
+                }
+                else {
+                    
+                   
+                    if (vsum == 0) {
+                        vsum = ''
+                    }
+                    if (rsum == 0) {
+                        rsum = ''
+                    }
+
+                    //if (val.VoucherNo === 'OP') {
+                    //    debugger
+                    //    total = '';
+                    //    html += '<tr class="totalrow"><td></td><td></td><td></td><td>Total</td><td class="billtotal">' + vsum + '</td><td class="recptotal">' + rsum + '</td><td> </td><td> </td><td class="balancetotal">' + balance + '</td></tr>'
+
+                    //}
+
+
+                    $('#show' + a).html(vsum)
+                    html += '<tr class="totalrow"><td></td><td></td><td></td><td>Total</td><td class="billtotal" id="' +a + 'total">' + vsum + '</td><td class="recptotal">' + rsum + '</td><td> </td><td> ' + total + '</td><td class="balancetotal">' + balance + '</td></tr>'
+                    totalBill = 0
+                    total = 0
+                    vsum = 0;
+                    rsum = 0
+                    a = val.VoucherNo;
+                    if (val.BillAmount != '') {
+                        vsum = vsum + parseFloat(val.BillAmount)
+                        rsum = ''
+                        balance = balance + val.Total
+
+
+                    }
+                    else if (val.BillAmount != '' && val.ReceiptAmount != '') {
+                        rsum = ''
+                        vsum = ''
+                    }
+                    else {
+                        rsum = rsum + parseFloat(val.ReceiptAmount)
+                        vsum = ''
+                        balance = balance - val.ReceiptAmount
+
+
+                    }
+                    total = total + val.Total
+                    totalBill = val.Total + totalBill
+
+
+                    html += '<tr><td>' + val.VoucherNo + '</td><td id="show' + val.VoucherNo + '">' + '</td></tr>'
+                     
+                    
+                    html += '<tr><td>' + val.VoucherNo + '</td><td>' + val.Month + '</td><td>' + d + '</td><td>' + val.LedgerName + '</td><td>' + val.BillAmount + '</td><td>' + val.ReceiptAmount + '</td><td>' + val.Discount + '</td><td>' + val.Total + '</td><td></td>';
+
+                }
+
+
+
+            }
+            else if (ind === t1.length) {
+
+                html += '<tr><td></td></tr>'
+            }
+            else {
+
+                
+                total = total + val.Total
+
+                balance = balance + val.Total
+                balance = balance - val.ReceiptAmount
+                totalBill = val.Total + totalBill
+                if (val.BillAmount != '') {
+                    vsum = vsum + parseFloat(val.BillAmount);
+                }
+
+
+                html += '<tr><td>' + '</td><td>' + '</td><td>' + '</td><td>' + val.LedgerName + '</td><td>' + val.BillAmount + '</td><td>' + val.ReceiptAmount + '</td><td>' + val.Discount + '</td>'
+
+              
+                if (val.VoucherNo == 'Opening') {
+                    vsum = vsum + val.Total
+                    html += '<td></td><td>' + val.Total + '</td>'
+                    total = ''
+                   
+                   
+                }
+                else {
+
+                    html += '<td>' + val.Total + '</td><td></td>'
+                }
+                html += '</tr>';
+            }
+            if (ind === t1.length - 1) {
+                html += '<tr class="totalrow"><td></td><td></td><td></td><td>Total</td><td>' + vsum + '</td><td>' + rsum + '</td><td> </td><td> ' + totalBill + '</td><td>' + balance + '</td></tr>'
+
+            }
+            $(t1, function (key, value) {
+              
+                if (v != value.VoucherNo) {
+                    $('#' + value.VoucherNo).html(2);
+                }
+            })
+
+        })
+    
+        $('#tbl').html(html)
+       
+  
+        var v = 0;
+        
+        //html += '<tr><td></td><td></td><td></td><td></td><td>' + fbill + '</td><td>' + rtotal + '</td></tr>'
+     
+      
+        $('#tbl').each(function(tblkey, tblval)
+        {
+            debugger
+            $(t1, function (key, val) {
+                $('#a' + val.VoucherNo).html();
+                console.log($('#' + val.VoucherNo+'total').val());
+            })
+        })
+    </script>
+</body>
+</html>
